@@ -8,12 +8,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: flrvisuals
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Unzip project
+        run: unzip -o -q flrvisuals-1.2.1-src.zip
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -27,6 +27,7 @@ jobs:
           gradle-version: 8.8
 
       - name: Build
+        working-directory: flrvisuals
         run: gradle build --no-daemon
 
       - name: Upload jar
